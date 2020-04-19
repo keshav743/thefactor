@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             button2.setVisibility(View.INVISIBLE);
             button3.setVisibility(View.INVISIBLE);
             button4.setVisibility(View.INVISIBLE);
+            editText.setText("");
             editText.requestFocus();
             imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         score = 0;
         count = 0;
         scoreTextView.setText("0/0");
+        editText.setText("");
         editText.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
@@ -241,5 +243,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetCountDownTimer(){
         countdownTextView.setText("0s");
+    }
+
+    @Override
+    protected void onPause() {
+        scores.add(Integer.toString(score));
+        ref.add(score);
+        try{
+            sharedPreferences.edit().putString("streak",ObjectSerializer.serialize(scores)).apply();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        hideKeyboardFrom(getApplicationContext(),imageView);
+        super.onPause();
+    }
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
