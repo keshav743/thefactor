@@ -149,7 +149,6 @@
                 android:fontFamily="monospace"
                 android:text="Longest Streak: 0"
                 android:textSize="25sp"
-                android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

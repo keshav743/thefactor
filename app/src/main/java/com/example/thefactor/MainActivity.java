@@ -17,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+
+import static java.lang.StrictMath.abs;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -178,9 +181,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void newQuestion(int ui) {
         ArrayList<Integer> f = new ArrayList<>();
-        for (int i = 1; i <= ui; i++) {
-            if (ui % i == 0) {
-                f.add(i);
+        for (int i = -ui; i <= ui; i++) {
+            if(i==0){
+                continue;
+            }else {
+                if (ui % i == 0) {
+                    f.add(i);
+                }
             }
         }
         Random rand = new Random();
@@ -192,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
             if (y == b) {
                 answers.add(Integer.toString(answer1));
             } else {
-                int w = rand.nextInt(ui) + 1;
-                while (f.contains(w) || answers.contains(Integer.toString(w))) {
-                    w = rand.nextInt(ui) + 1;
+                int w = rand.nextInt(ui + ui) -ui;
+                while (f.contains(w) || answers.contains(Integer.toString(abs(w))) || w==0) {
+                    w = rand.nextInt(ui + ui) - ui;
                 }
                 Log.i("opt", Integer.toString(w));
                 answers.add(Integer.toString(w));
